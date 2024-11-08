@@ -51,7 +51,8 @@ class RequirementsCheck:
             package_info = self.get_package_info(package)
             new_version = self.compare_version(version_local, package_info)
             if new_version:
-                new_requirement_lines.append(f"{package}=={new_version}")
+                new_requirement_line = requirement_line.replace(version_local, new_version)
+                new_requirement_lines.append(new_requirement_line)
                 continue
 
             new_requirement_lines.append(requirement_line)
