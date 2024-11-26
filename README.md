@@ -31,6 +31,11 @@ Additionally, this takes to optional arguments:
 
 ## Build
 
+Run tests:
+```
+python -m unittest src/requirementscheck/test_requirementscheck.py
+```
+
 1. Update the version in setup.py
 2. Git Tag
 3. Push tag
