@@ -23,6 +23,12 @@ requirementscheck
 
 to look for requirements files and update your dependencies based on your prompts.
 
+Additionally, this takes to optional arguments:
+
+- `--confirm | --no-confirm`: Ask for confirmation with link to upstream package before applying update, default `True`.
+- `--pin | --no-pin`: Pin a dependency to the latest version if found to be not pinned, default `False`.
+- `-h | --help`: Print help text and exit.
+
 ## Build
 
 1. Update the version in setup.py
