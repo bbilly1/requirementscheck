@@ -4,8 +4,9 @@ import argparse
 import json
 import urllib.request
 from pathlib import Path
-from packaging.specifiers import SpecifierSet
+
 from packaging.requirements import Requirement
+from packaging.specifiers import SpecifierSet
 
 
 class RequirementsCheck:
@@ -33,8 +34,7 @@ class RequirementsCheck:
         """find all requirement files"""
         cwd = Path.cwd()
         requirements_files = [
-            file for file in cwd.rglob(self.SEARCH)
-            if not any(exclude_dir in file.parts for exclude_dir in self.IGNORE)
+            file for file in cwd.rglob(self.SEARCH) if not any(exclude_dir in file.parts for exclude_dir in self.IGNORE)
         ]
 
         return requirements_files
@@ -102,7 +102,7 @@ class RequirementsCheck:
 
         return req
 
-    def get_package_info(self, package: str) -> dict[str,str]:
+    def get_package_info(self, package: str) -> dict[str, str]:
         """get remote version of package"""
         url = f"https://pypi.org/pypi/{package}/json"
         with urllib.request.urlopen(url) as urllib_response:
@@ -151,9 +151,7 @@ def main():
     parser.add_argument(
         "--confirm", help="Prompt to confirm update", action=argparse.BooleanOptionalAction, default=True
     )
-    parser.add_argument(
-        "--pin", help="Pin unpinned requirements", action=argparse.BooleanOptionalAction, default=False
-    )
+    parser.add_argument("--pin", help="Pin unpinned requirements", action=argparse.BooleanOptionalAction, default=False)
     args = parser.parse_args()
     RequirementsCheck(confirm=args.confirm, pin_requirement=args.pin).update()
 
