@@ -6,7 +6,7 @@ Core Functionality:
 
 ## Install
 
-Install into your environment with pip:
+RequirementsCheck is available on [pypi.org/project/RequirementsCheck/](https://pypi.org/project/RequirementsCheck/). Install into your environment with pip:
 
 ```
 pip install requirementscheck
