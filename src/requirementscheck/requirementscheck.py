@@ -48,6 +48,7 @@ class RequirementsCheck:
         for line in requirement_lines:
             if not line or line[0] in ["#", "-"]:
                 lines_parsed.append(line)
+                continue
 
             try:
                 req = Requirement(line)
