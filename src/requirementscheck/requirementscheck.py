@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import re
 import urllib.request
 from pathlib import Path
 
@@ -46,18 +47,20 @@ class RequirementsCheck:
 
         lines_parsed = []
         for line in requirement_lines:
-            if not line or line[0] in ["#", "-"]:
+            if not line or line[0] in ["#", "-"] or "# rc:ignore" in line:
                 lines_parsed.append(line)
                 continue
 
             try:
-                req = Requirement(line)
+                requirement, extra_args = self._split_requirement(line)
+                req = Requirement(requirement)
+
                 if req.specifier:
                     updated_req = self._update_line(req)
-                    lines_parsed.append(str(updated_req))
+                    lines_parsed.append(f"{updated_req} {extra_args}".strip())
                 elif self.pin_requirement:
                     pinned_req = self._add_req_pin(req)
-                    lines_parsed.append(str(pinned_req))
+                    lines_parsed.append(f"{pinned_req} {extra_args}".strip())
                 else:
                     lines_parsed.append(line)
 
@@ -71,6 +74,13 @@ class RequirementsCheck:
             return
 
         self.update_requirements(requirements_file, to_update)
+
+    def _split_requirement(self, line: str) -> tuple[str, str]:
+        """Splits the package requirement from any extra pip arguments."""
+        parts = re.split(r"\s(--\S+)", line, maxsplit=1)
+        requirement = parts[0].strip()  # Package requirement
+        extra_args = "".join(parts[1:]).strip() if len(parts) > 1 else ""  # Remaining pip options
+        return requirement, extra_args
 
     def _update_line(self, req: Requirement) -> Requirement:
         """update line"""
@@ -86,7 +96,6 @@ class RequirementsCheck:
                     updated_specifiers.append(f"=={version_local}")
 
         req.specifier = SpecifierSet(",".join(updated_specifiers))
-
         return req
 
     def _add_req_pin(self, req: Requirement) -> Requirement:

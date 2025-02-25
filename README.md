@@ -29,6 +29,10 @@ Additionally, this takes to optional arguments:
 - `--pin | --no-pin`: Pin a dependency to the latest version if found to be not pinned, default `False`.
 - `-h | --help`: Print help text and exit.
 
+## Ignore
+
+You can ignore certain lines in your requirements file by appending a comment `# rc:ignore` to the line, indicating for requirementscheck to ignore that line.
+
 ## Build
 
 Run tests:
