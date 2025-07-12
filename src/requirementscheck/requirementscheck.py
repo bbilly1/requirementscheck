@@ -55,12 +55,12 @@ class RequirementsCheck:
                 requirement, extra_args = self._split_requirement(line)
                 req = Requirement(requirement)
 
-                if req.specifier:
-                    updated_req = self._update_line(req)
-                    lines_parsed.append(f"{updated_req} {extra_args}".strip())
-                elif self.pin_requirement:
+                if self.pin_requirement and not req.specifier:
                     pinned_req = self._add_req_pin(req)
                     lines_parsed.append(f"{pinned_req} {extra_args}".strip())
+                elif not self.pin_requirement and req.specifier:
+                    updated_req = self._update_line(req)
+                    lines_parsed.append(f"{updated_req} {extra_args}".strip())
                 else:
                     lines_parsed.append(line)
 
