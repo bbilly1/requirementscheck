@@ -7,7 +7,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="RequirementsCheck",
-    version="0.1.0",
+    version="0.1.1",
     author="Simon",
     author_email="simobilleter@gmail.com",
     description="A CLI utility to check and update Python package versions in requirements.txt files",
