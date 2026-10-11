@@ -47,7 +47,7 @@ class RequirementsCheck:
 
         lines_parsed = []
         for line in requirement_lines:
-            if not line or line[0] in ["#", "-"] or "# rc:ignore" in line:
+            if not line or line[0] in ["#", "-"] or "# rc:ignore" in line or " @ " in line:
                 lines_parsed.append(line)
                 continue
 
